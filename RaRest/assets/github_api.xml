@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api baseurl="http://api.github.com">
+	<debug status="on">
+		<log type="url"/>
+		<log type="response"/>
+		<log type="cookie"/>
+	</debug>
+	<service name="jsonresponse" default="yes">
+		<header name="accept-response">application/json</header>
+		<param alias="oAuthToken" mandatory="yes" name="access_token" type="query"/>
+	</service>
+	<service name="xmlresponse">
+		<header name="accept-response">application/xml</header>
+		<param alias="oAuthToken" mandatory="yes" name="access_token" type="query"/>
+	</service> 
+	<!-- get user service -->
+	<service name="getUser" url="/users/{userId}" verb="get" parent="xmlresponse">
+		<param mandatory="true" name="userId" type="rest"/>
+	</service>
+	<!-- get current user service -->
+	<service name="getCurrentUser" url="/user" verb="get"/>
+	<!--Update the authenticated user-->
+	<service name="updateCurrentUser" url="/user" verb="patch">
+		<param name="name" type="body"/>
+		<param name="name" type="body"/>
+		<param name="email" type="body"/>
+		<param name="blog" type="body"/>
+		<param name="company" type="body"/>
+		<param name="location" type="body"/>
+		<param name="hireable" type="body"/>
+		<param name="bio" type="body"/>
+	</service>
+	<!--Get your repositiories-->
+	<service name="getCurrentUserRepositories" url="/user/repos" verb="get">
+		<param name="type" type="query"/>
+		<!-- all, owner, public, private, member. Default: all-->
+		<param name="sort" type="query"/>
+		<!-- created, updated, pushed, full_name, default: full_name -->
+		<param name="direction" type="query"/>
+		<!-- asc or desc, default: when using full_name: asc, otherwise desc.-->
+	</service>
+	<!--Get specific user repositiories-->
+	<service name="getCurrentUserRepositories" url="/users/{userId}/repos" verb="get">
+		<param mandatory="true" name="userId" type="rest"/>
+		<param name="type" type="query"/>
+		<!-- all, owner, public, private, member. Default: all-->
+		<param name="sort" type="query"/>
+		<!-- created, updated, pushed, full_name, default: full_name -->
+		<param name="direction" type="query"/>
+		<!-- asc or desc, default: when using full_name: asc, otherwise desc.-->
+	</service>
+	<!--Create repository-->
+	<service name="getCurrentUserRepositories" url="/users/{userId}/repos" verb="post">
+		<param mandatory="true" name="userId" type="rest"/>
+		<param mandatory="true" name="name" type="body"/>
+		<param name="description" type="body"/>
+		<param name="homepage" type="body"/>
+		<param name="private" type="body"/>
+		<param alias="issues" name="has_issues" type="body"/>
+		<param alias="wiki" name="has_wiki" type="body"/>
+		<param alias="downloads" name="has_downloads" type="body"/>
+		<param alias="teamId" name="team_id" type="body"/>
+		<!-- The id of the team that will be granted access to this repository. This is only valid when creating a repo in an organization.-->
+		<param alias="autoInit" name="auto_init" type="body"/>
+		<!-- true to create an initial commit with empty README. Default is false.
+			gitignore_template -->
+		<param alias="gitignoreTemplate" name="gitignore_template" type="body"/>
+		<!-- Desired language or platform .gitignore template to apply. Ignored if auto_init parameter is not provided.-->
+	</service>
+</api>
