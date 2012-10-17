@@ -11,11 +11,25 @@ public class Header {
 	@Attribute(required=false)
 	private String alias;
 	
-	
-	
 	@Text(required=false)
 	private String value;
 	
+	public Header() {}
+	
+	public Header(String name, String alias, String value) {
+		super();
+		this.name = name;
+		this.alias = alias;
+		this.value = value;
+	}
+
+	public Header(Header other) {
+		this(other.getName(), other.getAlias(), other.getValue());
+	}
+
+	public Header clone() {
+		return new Header(this);
+	}
 	
 	public String getName() {
 		return name;
@@ -43,5 +57,13 @@ public class Header {
 	
 	public String toString() {
 		return String.format("Header name=%1$s alias%2$s value=%3$s",name,getAlias(),value);
+	}
+	public void merge(Header other) {
+		if (other.getAlias()!=null) {
+			alias=other.getAlias();
+		}
+		if (other.getValue()!=null) {
+			value=other.getValue();
+		}
 	}
 }

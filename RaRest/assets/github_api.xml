@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api baseurl="http://api.github.com">
-	<debug status="on">
-		<log type="url"/>
-		<log type="response"/>
-		<log type="cookie"/>
-	</debug>
-	<service name="jsonresponse" default="yes">
+	<logger show="true">
+		<include type="service" show="true"/>
+		<include type="param" />
+		<include type="header"/> 
+	</logger>
+	<service name="jsonresponse" default="true">
 		<header name="accept-response">application/json</header>
-		<param alias="oAuthToken" mandatory="yes" name="access_token" type="query"/>
+		<param alias="oAuthToken" mandatory="true" name="access_token" type="query"/>
 	</service>
 	<service name="xmlresponse">
 		<header name="accept-response">application/xml</header>
-		<param alias="oAuthToken" mandatory="yes" name="access_token" type="query"/>
+		<param alias="oAuthToken" mandatory="true" name="access_token" type="query"/>
 	</service> 
 	<!-- get user service -->
 	<service name="getUser" url="/users/{userId}" verb="get" parent="xmlresponse">
 		<param mandatory="true" name="userId" type="rest"/>
+		<param name="access_token">HUMBÑEBJDJFE</param>
 	</service>
 	<!-- get current user service -->
 	<service name="getCurrentUser" url="/user" verb="get"/>
