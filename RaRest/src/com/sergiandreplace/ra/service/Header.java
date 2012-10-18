@@ -1,7 +1,11 @@
 package com.sergiandreplace.ra.service;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Text;
+
+import com.sergiandreplace.ra.logger.Logger;
 
 public class Header {
 	
@@ -13,6 +17,8 @@ public class Header {
 	
 	@Text(required=false)
 	private String value;
+	
+
 	
 	public Header() {}
 	

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.content.Context;
 
+import com.sergiandreplace.ra.engine.Harvester;
 import com.sergiandreplace.ra.exception.ConfigFileException;
 import com.sergiandreplace.ra.exception.HeaderAliasNotFoundException;
 import com.sergiandreplace.ra.exception.ParamAliasNotFoundException;
@@ -15,8 +16,19 @@ import com.sergiandreplace.ra.service.Api;
 import com.sergiandreplace.ra.service.Service;
 import com.sergiandreplace.ra.xml.XmlLoader;
 
+/**
+ * Main class from the RaREST library. This will be responsible of all interactions with the library components.
+ * @author Sergi Martínez
+ *
+ */
 public class Ra {
+	/**
+	 * List of configuration files loaded. This will be maintained across instances
+	 */
 	private static Map<String, Api> apis;
+	/**
+	 * The context
+	 */
 	private Context context;
 	private Api api;
 	private String serviceName;
@@ -31,6 +43,7 @@ public class Ra {
 			loadApi(apiName);
 		}
 		api = apis.get(apiName);
+		
 	}
 
 	public Ra loadApi(String apiName) {
@@ -53,7 +66,7 @@ public class Ra {
 	public Ra service(String serviceName) {
 		if (api.hasService(serviceName)) {
 			this.serviceName=serviceName;
-			this.service = api.LoadService(serviceName);
+			this.service = api.loadService(serviceName);
 		} else {
 			throw new ServiceNotFoundException(serviceName);
 		}
@@ -84,6 +97,15 @@ public class Ra {
 
 	public String getServiceName() {
 		return serviceName;
+	}
+	
+	public Ra execute() {
+		if (service == null) {
+			throw new ServiceNotLoadedException();
+		}
+		Harvester harvester=new Harvester(service);
+		harvester.execute();
+		return this;
 	}
 
 }

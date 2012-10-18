@@ -68,4 +68,9 @@
 		<param alias="gitignoreTemplate" name="gitignore_template" type="body"/>
 		<!-- Desired language or platform .gitignore template to apply. Ignored if auto_init parameter is not provided.-->
 	</service>
+	<preprocessor name="com.sergiandreplace.ra.testPreprocessor" Code="404" >
+		<header name="prep">true</header>
+	</preprocessor>
+	
+	</preprocess>
 </api>

@@ -82,7 +82,7 @@ public class Api {
 		}
 		return found;
 	}
-	public Service LoadService(String serviceName) {
+	public Service loadService(String serviceName) {
 		Service service;
 		Service fullService;
 		Service parentService;

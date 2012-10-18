@@ -1,7 +1,11 @@
 package com.sergiandreplace.ra.service;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Text;
+
+import com.sergiandreplace.ra.logger.Logger;
 
 public class Param {
 	public static enum ParamType {rest,query,body};
@@ -21,6 +25,7 @@ public class Param {
 	@Text(required=false)
 	private String value;
 	
+
 	public Param() {}
 	
 	

@@ -10,7 +10,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         Ra ra=new Ra(this,"github_api");
-        ra.service("updateCurrentUser");
+        ra.service("updateCurrentUser").set("userId","2");
+        
         
     }
 

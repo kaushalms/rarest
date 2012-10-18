@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Path;
 
 import com.sergiandreplace.ra.exception.HeaderNotFoundException;
 import com.sergiandreplace.ra.exception.ParamAliasNotFoundException;
 import com.sergiandreplace.ra.exception.ParamNotFoundException;
+import com.sergiandreplace.ra.logger.Logger;
 
 public class Service {
 	
@@ -34,6 +37,10 @@ public class Service {
 	
 	@ElementList(inline=true, required=false)
 	private List<Param> params=new ArrayList<Param>();
+	
+	@Path("/api/logger")
+	@Element
+	private Logger logger;
 	
 	
 	
