@@ -41,7 +41,7 @@
 		<!-- asc or desc, default: when using full_name: asc, otherwise desc.-->
 	</service>
 	<!--Get specific user repositiories-->
-	<service name="getCurrentUserRepositories" url="/users/{userId}/repos" verb="get">
+	<service name="getUserRepositories" url="/users/{userId}/repos" verb="get">
 		<param mandatory="true" name="userId" type="rest"/>
 		<param name="type" type="query"/>
 		<!-- all, owner, public, private, member. Default: all-->
@@ -68,9 +68,5 @@
 		<param alias="gitignoreTemplate" name="gitignore_template" type="body"/>
 		<!-- Desired language or platform .gitignore template to apply. Ignored if auto_init parameter is not provided.-->
 	</service>
-	<preprocessor name="com.sergiandreplace.ra.testPreprocessor" Code="404" >
-		<header name="prep">true</header>
-	</preprocessor>
-	
-	</preprocess>
+
 </api>
