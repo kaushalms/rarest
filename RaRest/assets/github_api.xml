@@ -50,9 +50,7 @@
 		<param name="direction" type="query"/>
 		<!-- asc or desc, default: when using full_name: asc, otherwise desc.-->
 	</service>
-	<!--Create repository-->
-	<service name="getCurrentUserRepositories" url="/users/{userId}/repos" verb="post">
-		<param mandatory="true" name="userId" type="rest"/>
+								<param mandatory="true" name="userId" type="rest"/>
 		<param mandatory="true" name="name" type="body"/>
 		<param name="description" type="body"/>
 		<param name="homepage" type="body"/>
