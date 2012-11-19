@@ -10,6 +10,8 @@ public class ConfigFileException extends RuntimeException  {
 	public ConfigFileException(Exception e) {
 		super(e);
 	}
-	
+	public ConfigFileException() {
+
+	}
 
 }

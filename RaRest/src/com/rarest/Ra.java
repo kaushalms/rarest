@@ -56,6 +56,14 @@ public class Ra {
 		
 	}
 
+	
+	public Ra(String apiName) {
+		if (!apis.containsKey(apiName)) {
+			throw new ConfigFileException();
+		}
+		api = apis.get(apiName);
+	}
+	
 	public Ra loadApi(String apiName) {
 		String filename = apiName;
 		if (!filename.endsWith(".xml")) {
