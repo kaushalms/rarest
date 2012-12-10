@@ -99,9 +99,12 @@ public class Api {
 		}else{
 			fullService=service.clone();
 		}
-		logger.s(fullService.toString());
+		logger.log(fullService.toString());
 		return fullService;
 		
+	}
+	public Logger getLogger() {
+		return logger;
 	}
 	
 }

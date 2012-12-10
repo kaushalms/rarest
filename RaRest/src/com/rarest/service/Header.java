@@ -1,11 +1,7 @@
 package com.rarest.service;
 
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Text;
-
-import com.rarest.logger.Logger;
 
 public class Header {
 	

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api baseurl="http://api.github.com">
-	<logger show="true">
-		<include type="service" show="true"/>
-		<include type="param" />
-		<include type="header"/> 
-	</logger>
+	<logger show="true" />
+		
 	<service name="jsonresponse" default="true">
 		<header name="accept-response">application/json</header>
 		<param alias="oAuthToken" mandatory="true" name="access_token" type="query"/>

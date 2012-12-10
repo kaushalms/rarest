@@ -31,6 +31,7 @@ import com.rarest.exception.NullHeaderException;
 import com.rarest.exception.UrlFieldNotFoundInParams;
 import com.rarest.exception.UrlFieldTypeShouldBeRest;
 import com.rarest.exception.VerbNotAllowedException;
+import com.rarest.logger.Logger;
 import com.rarest.processor.Postprocessor;
 import com.rarest.processor.Preprocessor;
 import com.rarest.service.Param;
@@ -48,6 +49,8 @@ public class Harvester {
 	
 
 	private String baseUrl;
+
+	private Logger logger;
 	
 	
 	public Harvester(String baseUrl,Service service) {
@@ -255,5 +258,13 @@ public class Harvester {
 			ent = null;
 		}
 		return ent;
+	}
+	
+	public Logger getLogger() {
+		return logger;
+	}
+	public void setLogger(Logger logger) {
+		this.logger=logger;
+		
 	}
 }

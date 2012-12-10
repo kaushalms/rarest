@@ -14,6 +14,7 @@ import com.rarest.exception.HeaderAliasNotFoundException;
 import com.rarest.exception.ParamAliasNotFoundException;
 import com.rarest.exception.ServiceNotFoundException;
 import com.rarest.exception.ServiceNotLoadedException;
+import com.rarest.logger.Logger;
 import com.rarest.service.Api;
 import com.rarest.service.Service;
 import com.rarest.xml.XmlLoader;
@@ -28,69 +29,72 @@ public class Ra {
 	 * List of configuration files loaded. This will be maintained across instances
 	 */
 	private static Map<String, Api> apis;
-	/**
-	 * The context
-	 */
-	private Context context;
+	Logger logger;
+	
 	private Api api;
+	
+	/**
+	 * The current loaded api for the current api object with its current values
+	 * @return the whole api that is currently loaded
+	 */
 	public Api getApi() {
 		return api;
 	}
 
-	public void setApi(Api api) {
-		this.api = api;
-	}
-
+	
 	private String serviceName;
 	private Service service;
 
-	public Ra(Context context, String apiName) {
-		this.context = context;
-		if (apis == null) {
-			apis = new HashMap<String, Api>();
-		}
-		if (!apis.containsKey(apiName)) {
-			loadApi(apiName);
-		}
-		api = apis.get(apiName);
-		
-	}
 
-	
+	/**
+	 * Generates a new instance of the RA object with the selected api cloned and ready to be modified
+	 * @param apiName the name of the api to use. If it it not currently loaded, a runtime error will be thrown
+	 */
 	public Ra(String apiName) {
 		if (!apis.containsKey(apiName)) {
 			throw new ConfigFileException();
 		}
 		api = apis.get(apiName);
+		this.logger=api.getLogger();
+		logger.log("Api " + apiName + " selected");
 	}
 	
-	public Ra loadApi(String apiName) {
-		String filename = apiName;
-		if (!filename.endsWith(".xml")) {
-			filename += ".xml";
-		}
-		InputStream isConfig = null;
-		try {
-			isConfig = context.getAssets().open(filename);
-		} catch (Exception e) {
-			throw new ConfigFileException(e);
-		}
-
+	/**
+	 * Static method that loads a config file and stores it
+	 * @param apiName Key used to retrieve the configuration later on
+	 * @param isConfig InputStream to the configuration file
+	 */
+	public static void loadApi(String apiName, InputStream isConfig) {
 		Api api = XmlLoader.load(isConfig);
 		apis.put(apiName, api);
-		return this;
+		api.getLogger().log("Api " + apiName + " loaded");
 	}
 
+	/**
+	 * Stablished the current service to invoke. From this point, all the set and header 
+	 * calls are applied to this service.
+	 * If you need to call another service, execute this method again with the new service. This will remove
+	 * all the values established, and the new service will contain the values setup in the configuration file
+	 * @param serviceName name of the service to load. It will throw a runtime error if service is not in the current config.
+	 * @return the same Ra object. 
+	 */
 	public Ra service(String serviceName) {
 		if (api.hasService(serviceName)) {
 			this.serviceName=serviceName;
 			this.service = api.loadService(serviceName);
+			this.service.setLogger(logger);
 		} else {
 			throw new ServiceNotFoundException(serviceName);
 		}
 		return this;
 	}
 
+	/**
+	 * 
+	 * @param param
+	 * @param value
+	 * @return
+	 */
 	public Ra set(String param, String value) {
 		if (service == null) {
 			throw new ServiceNotLoadedException();
@@ -98,7 +102,7 @@ public class Ra {
 		if (!service.hasParamByAlias(param)) {
 			throw new ParamAliasNotFoundException(param);
 		}
-		service.getParamByAlias(param).setValue(value);
+		service.getParamByAlias(param).setValue(value).setLogger(logger);
 		return this;
 	}
 
@@ -122,6 +126,7 @@ public class Ra {
 			throw new ServiceNotLoadedException();
 		}
 		Harvester harvester=new Harvester(api.getBaseUrl(), service);
+		harvester.setLogger(logger);
 		return harvester.execute();
 	
 	}

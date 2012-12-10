@@ -24,6 +24,8 @@ public class Param {
 	
 	@Text(required=false)
 	private String value;
+
+	private Logger logger;
 	
 
 	public Param() {}
@@ -79,8 +81,9 @@ public class Param {
 	public String getValue() {
 		return value;
 	}
-	public void setValue(String value) {
+	public Param setValue(String value) {
 		this.value = value;
+		return this;
 	}
 	
 	public String toString() {
@@ -118,6 +121,14 @@ public class Param {
 		if (param.getValue()!=null) {
 			this.setValue(param.getValue());
 		}
+		
+	}
+	public Logger getLogger()  {
+		return logger;
+	}
+
+	public void setLogger(Logger logger) {
+		this.logger=logger;
 		
 	}
 }

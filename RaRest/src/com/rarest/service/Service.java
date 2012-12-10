@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Path;
 
 import com.rarest.exception.HeaderNotFoundException;
 import com.rarest.exception.ParamAliasNotFoundException;
@@ -16,6 +14,8 @@ import com.rarest.logger.Logger;
 public class Service {
 	
 	public static enum Verb {get,post,put,delete,patch,head};
+
+	private Logger logger;
 	
 	@Attribute(required=false)
 	private String name;
@@ -295,5 +295,13 @@ public class Service {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public void setLogger(Logger logger) {
+		this.logger = logger;
 	}
 }

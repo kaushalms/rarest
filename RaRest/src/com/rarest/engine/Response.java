@@ -142,7 +142,7 @@ public class Response {
 	 */
 	public <T> T getBodyJson(Class<T> bodyClass)  {
 		T bodyObject=null;
-		if (body!=null && body==null) {
+		if (body!=null) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				bodyObject= mapper.readValue(body,bodyClass);
@@ -160,7 +160,7 @@ public class Response {
 	 */
 	public <T> T getBodyXml(Class<T> bodyClass)  {
 		T bodyObject=null;
-		if (body!=null && body==null) {
+		if (body!=null) {
 			Serializer serializer=new Persister();
 			try {
 				bodyObject= serializer.read(bodyClass, body);
